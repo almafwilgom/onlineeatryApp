@@ -44,3 +44,6 @@ desktop.ini
 
 # Coverage
 coverage/
+
+# Temp commit message helper (Windows cmd quoting workaround)
+.commitmsg
