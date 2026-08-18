@@ -1,10 +1,13 @@
 const express = require('express');
-const router = express.Router();
-const authController = require('../controllers/authController');
-// validators imported in Phase 4
-// const { signupValidator, loginValidator } = require('../validators/authValidators');
+const router  = express.Router();
 
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
+const authController              = require('../controllers/authController');
+const { signupValidator, loginValidator } = require('../validators/authValidators');
+
+// POST /api/auth/signup — public
+router.post('/signup', signupValidator, authController.signup);
+
+// POST /api/auth/login — public
+router.post('/login', loginValidator, authController.login);
 
 module.exports = router;

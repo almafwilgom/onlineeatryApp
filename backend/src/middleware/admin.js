@@ -1,15 +1,25 @@
 /**
  * admin.js — role-based authorization middleware.
- * Must be used AFTER the protect middleware.
- * Denies access to any user whose role is not 'admin'.
  *
- * Implementation will be completed in Phase 4.
+ * MUST be used AFTER the protect middleware, because it reads req.user
+ * which protect sets.
+ *
+ * Usage:
+ *   router.post('/menu', protect, adminOnly, menuController.createItem)
+ *
+ * Returns 403 Forbidden if the authenticated user is not an admin.
+ * Returns 401 if called without protect (req.user is undefined).
  */
 const { sendError } = require('../utils/response');
 
 const adminOnly = (req, res, next) => {
-  // Placeholder — full implementation in Phase 4
-  return sendError(res, 501, 'Admin middleware not yet implemented.');
+  if (!req.user) {
+    return sendError(res, 401, 'Access denied. Not authenticated.');
+  }
+  if (req.user.role !== 'admin') {
+    return sendError(res, 403, 'Access denied. Admin privileges required.');
+  }
+  next();
 };
 
 module.exports = { adminOnly };
