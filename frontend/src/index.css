@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* ── Global Design Tokens ─────────────────────────────────────── */
+@theme {
+  --color-brand-primary: #f97316;   /* orange-500 */
+  --color-brand-dark:    #c2410c;   /* orange-700 */
+  --color-brand-light:   #fed7aa;   /* orange-200 */
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0f172a;
+  color: #f1f5f9;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar styling ────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: #f97316;
+  border-radius: 3px;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "online-eatery",
+  "version": "1.0.0",
+  "description": "PORA Tech Academy Capstone — Full-Stack Food Ordering & Management System",
+  "private": true,
+  "scripts": {
+    "backend": "cmd /c \"cd backend && npm run dev\"",
+    "frontend": "cmd /c \"cd frontend && npm run dev\"",
+    "install:backend": "cmd /c \"cd backend && npm install\"",
+    "install:frontend": "cmd /c \"cd frontend && npm install\"",
+    "install:all": "npm run install:backend && npm run install:frontend"
+  },
+  "author": "",
+  "license": "ISC"
+}
