@@ -1,13 +1,24 @@
 const express = require('express');
-const router = express.Router();
-const orderController = require('../controllers/orderController');
-// const { protect } = require('../middleware/auth');    // enabled Phase 6
-// const { adminOnly } = require('../middleware/admin'); // enabled Phase 6
+const router  = express.Router();
 
-router.post('/', orderController.createOrder);
-router.get('/my-orders', orderController.getMyOrders);
-router.get('/', orderController.getAllOrders);
-router.get('/:id', orderController.getOrderById);
-router.patch('/:id/status', orderController.updateStatus);
+const orderController                       = require('../controllers/orderController');
+const { protect }                            = require('../middleware/auth');
+const { adminOnly }                          = require('../middleware/admin');
+const { createOrderValidator, updateStatusValidator } = require('../validators/orderValidators');
+
+// All order endpoints require authentication
+router.use(protect);
+
+// ── Customer routes ───────────────────────────────────────────────────────────
+router.post('/',           createOrderValidator, orderController.createOrder);
+router.get('/my-orders',   orderController.getMyOrders);
+
+// ── Admin routes ──────────────────────────────────────────────────────────────
+router.get('/dashboard',   adminOnly, orderController.getDashboard);
+router.get('/',            adminOnly, orderController.getAllOrders);
+router.patch('/:id/status', adminOnly, updateStatusValidator, orderController.updateStatus);
+
+// ── Shared route (ownership check inside controller) ──────────────────────────
+router.get('/:id',         orderController.getOrderById);
 
 module.exports = router;
