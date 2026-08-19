@@ -7,7 +7,7 @@
  *  - Configure Express middleware
  *  - Mount API routes
  *  - Register 404 and error handlers
- *  - Start the HTTP server
+ *  - Start the HTTP server with automatic port fallback handling
  */
 
 require('dotenv').config();
@@ -74,7 +74,22 @@ app.use(notFound);
 // ── Centralized error handler — must come last ────────────────────────────────
 app.use(errorHandler);
 
-// ── Start server ─────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀 Server running in ${NODE_ENV} mode on port ${PORT}`);
-});
+// ── Start server with port error handling ────────────────────────────────────
+const initialPort = parseInt(PORT, 10) || 5000;
+
+const startServer = (port) => {
+  const server = app.listen(port, () => {
+    console.log(`🚀 Server running in ${NODE_ENV} mode on port ${port}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`⚠️ Port ${port} is already in use. Retrying on port ${port + 1}...`);
+      setTimeout(() => startServer(port + 1), 1000);
+    } else {
+      console.error('❌ Server error:', err);
+    }
+  });
+};
+
+startServer(initialPort);
