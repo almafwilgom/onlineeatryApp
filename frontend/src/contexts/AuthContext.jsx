@@ -1,15 +1,5 @@
 /**
- * AuthContext.jsx — manages authentication state across the entire app.
- *
- * Provides:
- *  - user         : the current logged-in user object (or null)
- *  - token        : the JWT string (or null)
- *  - isAuthenticated : boolean shorthand
- *  - loading      : true while restoring session from localStorage on mount
- *  - login(token, user) : persist and set auth state
- *  - logout()     : clear auth state
- *
- * Full implementation in Phase 7.
+ * AuthContext.jsx — manages authentication state across the application.
  */
 import { createContext, useState, useEffect, useContext } from 'react';
 
@@ -22,13 +12,20 @@ export const AuthProvider = ({ children }) => {
 
   // Restore session from localStorage on app load
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser  = localStorage.getItem('user');
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+    try {
+      const storedToken = localStorage.getItem('token');
+      const storedUser  = localStorage.getItem('user');
+      if (storedToken && storedUser) {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser));
+      }
+    } catch (e) {
+      console.error('Error parsing stored user from localStorage:', e);
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   const login = (newToken, newUser) => {
@@ -36,6 +33,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
+  };
+
+  const updateUser = (updatedUser) => {
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
   };
 
   const logout = () => {
@@ -50,8 +52,10 @@ export const AuthProvider = ({ children }) => {
       user,
       token,
       isAuthenticated: !!token,
+      isAdmin: user?.role === 'admin',
       loading,
       login,
+      updateUser,
       logout,
     }}>
       {children}
@@ -59,5 +63,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook for convenient access
 export const useAuth = () => useContext(AuthContext);

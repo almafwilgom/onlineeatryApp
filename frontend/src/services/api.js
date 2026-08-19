@@ -1,21 +1,15 @@
 /**
  * api.js — centralised Axios instance.
- * All frontend API calls must go through this client.
- *
- * - Reads base URL from the VITE_API_URL environment variable.
- * - Automatically attaches the JWT Bearer token to every request.
- * - Handles 401 responses by clearing the token and redirecting to login.
- *
- * Full interceptor logic implemented in Phase 7.
+ * All frontend API calls go through this client.
  */
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Request interceptor — attach token
+// Request interceptor — attach token if present
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -27,14 +21,17 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor — handle 401
+// Response interceptor — handle expired token / unauthorized errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const isAuthRoute = error.config?.url?.includes('/auth/login') || error.config?.url?.includes('/auth/signup');
+    if (error.response?.status === 401 && !isAuthRoute) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }

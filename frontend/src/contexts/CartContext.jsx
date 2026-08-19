@@ -1,18 +1,5 @@
 /**
- * CartContext.jsx — manages the shopping cart state.
- *
- * Provides:
- *  - items          : array of { _id, name, price, imageUrl, quantity }
- *  - addItem(meal)  : add a meal or increment its quantity
- *  - removeItem(id) : remove a meal completely
- *  - updateQuantity(id, qty) : set exact quantity; qty <= 0 removes the item
- *  - clearCart()    : empty the cart (called after successful checkout)
- *  - total          : computed total price
- *  - itemCount      : total number of items (for navbar badge)
- *
- * Persisted to localStorage so the cart survives page refreshes.
- *
- * Full implementation in Phase 7.
+ * CartContext.jsx — manages shopping cart state and slide-over drawer toggle.
  */
 import { createContext, useState, useEffect, useContext } from 'react';
 
@@ -28,21 +15,29 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // Persist cart to localStorage whenever it changes
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(items));
   }, [items]);
 
-  const addItem = (meal) => {
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const addItem = (meal, qty = 1) => {
     setItems((prev) => {
       const existing = prev.find((i) => i._id === meal._id);
       if (existing) {
         return prev.map((i) =>
-          i._id === meal._id ? { ...i, quantity: i.quantity + 1 } : i
+          i._id === meal._id ? { ...i, quantity: i.quantity + qty } : i
         );
       }
-      return [...prev, { ...meal, quantity: 1 }];
+      return [...prev, { ...meal, quantity: qty }];
     });
+    showToast(`Added "${meal.name}" to your cart! 🛒`);
   };
 
   const removeItem = (id) => {
@@ -65,11 +60,25 @@ export const CartProvider = ({ children }) => {
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, total, itemCount }}>
+    <CartContext.Provider
+      value={{
+        items,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+        total,
+        itemCount,
+        isCartOpen,
+        setIsCartOpen,
+        openCart: () => setIsCartOpen(true),
+        closeCart: () => setIsCartOpen(false),
+        toastMessage,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
 
-// Custom hook for convenient access
 export const useCart = () => useContext(CartContext);

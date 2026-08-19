@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
-/* ── Global Design Tokens ─────────────────────────────────────── */
+/* ── Sleek Dark-Grey Design Tokens ───────────────────────────── */
 @theme {
-  --color-brand-primary: #f97316;   /* orange-500 */
-  --color-brand-dark:    #c2410c;   /* orange-700 */
-  --color-brand-light:   #fed7aa;   /* orange-200 */
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-brand-primary: #f97316;   /* vibrant orange */
+  --color-brand-dark:    #ea580c;   /* deep orange */
+  --color-brand-light:   #ffedd5;   /* soft orange light */
+  --color-grey-bg:        #121417;   /* primary sleek dark grey */
+  --color-grey-card:      #1c1f24;   /* panel grey */
+  --color-grey-border:    #2a2e35;   /* subtle border grey */
+  --color-grey-hover:     #252930;   /* interactive hover grey */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* ── Base Styles ──────────────────────────────────────────────── */
@@ -15,22 +19,47 @@
   padding: 0;
 }
 
-body {
-  font-family: var(--font-sans);
-  background-color: #0f172a;
-  color: #f1f5f9;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Scrollbar styling ────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  background-color: #121417;
+  color: #f3f4f6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Touch & Mobile Optimization ────────────────────────────── */
+button, input, select, textarea, a {
+  touch-action: manipulation;
+}
+
+/* ── Custom Scrollbar ────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #181a1d;
 }
 ::-webkit-scrollbar-thumb {
+  background: #2e333d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
   background: #f97316;
-  border-radius: 3px;
+}
+
+/* ── Utilities for hiding scrollbars on mobile slider tabs ────── */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
