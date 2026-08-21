@@ -54,20 +54,37 @@ const ManageOrders = () => {
     ? orders
     : orders.filter((o) => o.status === statusFilter);
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'Pending':
+        return 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'Preparing':
+        return 'bg-blue-50 text-blue-700 border-blue-200';
+      case 'Out for Delivery':
+        return 'bg-purple-50 text-purple-700 border-purple-200';
+      case 'Delivered':
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      case 'Cancelled':
+        return 'bg-rose-50 text-rose-700 border-rose-200';
+      default:
+        return 'bg-slate-100 text-slate-650 border-slate-200';
+    }
+  };
+
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-slate-100">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white">Manage Orders</h1>
-          <p className="text-slate-400 text-sm mt-1">Review customer orders and update delivery status</p>
+          <h1 className="text-3xl font-black text-slate-900">Manage Orders</h1>
+          <p className="text-slate-500 text-sm mt-1">Review customer orders and update delivery status</p>
         </div>
 
         <button
           onClick={fetchOrders}
-          className="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center gap-2"
+          className="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm"
         >
           <span>↻</span> Refresh List
         </button>
@@ -75,13 +92,13 @@ const ManageOrders = () => {
 
       <ErrorMessage message={error} />
       {success && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-semibold">
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-650 text-sm font-semibold">
           ✅ {success}
         </div>
       )}
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 bg-slate-900 border border-slate-800 p-2 rounded-2xl">
+      <div className="flex flex-wrap items-center gap-2 bg-white border border-slate-200 p-2 rounded-2xl shadow-sm">
         {statuses.map((st) => (
           <button
             key={st}
@@ -89,7 +106,7 @@ const ManageOrders = () => {
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               statusFilter === st
                 ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             {st} {st !== 'All' && `(${orders.filter((o) => o.status === st).length})`}
@@ -99,7 +116,7 @@ const ManageOrders = () => {
 
       {/* Orders List */}
       {filteredOrders.length === 0 ? (
-        <div className="text-center py-16 bg-slate-900/60 rounded-3xl border border-slate-800 text-slate-400 text-sm">
+        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 text-slate-400 text-sm shadow-sm">
           No orders found matching status "{statusFilter}".
         </div>
       ) : (
@@ -107,14 +124,14 @@ const ManageOrders = () => {
           {filteredOrders.map((order) => (
             <div
               key={order._id}
-              className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl"
+              className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm text-slate-700"
             >
               
               {/* Header Info */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
                 <div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-slate-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+                    <span className="text-xs font-mono text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200">
                       ID: #{order._id.substring(order._id.length - 8)}
                     </span>
                     <span className="text-xs text-slate-400">
@@ -122,24 +139,24 @@ const ManageOrders = () => {
                     </span>
                   </div>
 
-                  <div className="mt-3 space-y-1 text-xs">
-                    <p className="text-white font-bold">
+                  <div className="mt-3 space-y-1 text-xs text-slate-600">
+                    <p className="text-slate-900 font-bold">
                       👤 Customer: {order.user?.name || 'Unknown'} ({order.user?.email || 'N/A'})
                     </p>
-                    <p className="text-slate-400">
+                    <p className="text-slate-500">
                       📍 <strong>Address:</strong> {order.deliveryAddress}
                     </p>
                   </div>
                 </div>
 
                 {/* Status Updater Dropdown */}
-                <div className="flex items-center gap-3 bg-slate-950 p-3 rounded-2xl border border-slate-800">
-                  <span className="text-xs font-bold text-slate-400">Status:</span>
+                <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200/80">
+                  <span className="text-xs font-bold text-slate-500">Status:</span>
                   <select
                     value={order.status}
                     disabled={updatingId === order._id}
                     onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                    className="bg-slate-900 text-orange-400 font-extrabold text-xs px-3 py-2 rounded-xl border border-orange-500/30 focus:outline-none focus:border-orange-500 cursor-pointer"
+                    className="bg-white text-orange-655 font-extrabold text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-orange-500 cursor-pointer shadow-sm"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Preparing">Preparing</option>
@@ -155,11 +172,11 @@ const ManageOrders = () => {
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Order Items</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {order.items?.map((item, idx) => (
-                    <div key={idx} className="bg-slate-950/60 rounded-xl p-3 border border-slate-800/80 flex items-center justify-between text-xs">
-                      <span className="font-semibold text-white truncate max-w-[150px]">
+                    <div key={idx} className="bg-slate-50 rounded-xl p-3 border border-slate-200/60 flex items-center justify-between text-xs text-slate-700">
+                      <span className="font-semibold text-slate-900 truncate max-w-[150px]">
                         {item.quantity}x {item.menuItem?.name || 'Meal Item'}
                       </span>
-                      <span className="font-bold text-slate-400">
+                      <span className="font-bold text-slate-500">
                         ₦{(item.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
@@ -168,9 +185,9 @@ const ManageOrders = () => {
               </div>
 
               {/* Footer Total */}
-              <div className="pt-4 border-t border-slate-800 flex justify-between items-center text-sm">
-                <span className="text-slate-400">Total Revenue</span>
-                <span className="text-xl font-black text-orange-400">
+              <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-sm">
+                <span className="text-slate-500 font-medium">Total Revenue</span>
+                <span className="text-xl font-black text-orange-600">
                   ₦{Number(order.totalAmount).toLocaleString()}
                 </span>
               </div>

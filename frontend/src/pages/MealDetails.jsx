@@ -41,20 +41,20 @@ const MealDetails = () => {
   if (!meal) return null;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-slate-100">
       
       {/* Back button */}
       <button
         onClick={() => navigate(-1)}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white mb-8 transition-colors"
+        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-800 mb-8 transition-colors"
       >
         ← Back to Menu
       </button>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-0">
+      <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-md grid grid-cols-1 md:grid-cols-2 gap-0">
         
         {/* Image Side */}
-        <div className="relative bg-slate-800 h-80 md:h-auto min-h-[320px]">
+        <div className="relative bg-slate-100 h-80 md:h-auto min-h-[320px]">
           {meal.imageUrl ? (
             <img
               src={meal.imageUrl}
@@ -66,70 +66,70 @@ const MealDetails = () => {
               }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-7xl bg-gradient-to-br from-slate-800 to-slate-900">
+            <div className="w-full h-full flex items-center justify-center text-7xl bg-slate-200">
               🍲
             </div>
           )}
 
-          <span className="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md text-orange-400 text-xs font-bold px-3 py-1 rounded-full border border-orange-500/20">
+          <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-orange-600 text-xs font-bold px-3 py-1 rounded-full border border-orange-500/10 shadow-sm">
             {meal.category}
           </span>
         </div>
 
         {/* Info Side */}
-        <div className="p-8 sm:p-10 flex flex-col justify-between space-y-6">
+        <div className="p-8 sm:p-10 flex flex-col justify-between space-y-6 text-slate-700">
           <div className="space-y-4">
             
             <div className="flex items-center justify-between gap-4">
               <span className={`text-xs font-bold px-3 py-1 rounded-full ${
                 meal.isAvailable
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                  ? 'bg-emerald-50 text-emerald-600 border border-emerald-250'
+                  : 'bg-rose-5 text-rose-600 border border-rose-250'
               }`}>
                 {meal.isAvailable ? 'In Stock' : 'Sold Out'}
               </span>
-              <span className="text-xs text-slate-500">ID: {meal._id?.substring(0, 8)}...</span>
+              <span className="text-xs text-slate-400">ID: {meal._id?.substring(0, 8)}...</span>
             </div>
 
-            <h1 className="text-3xl font-black text-white">{meal.name}</h1>
+            <h1 className="text-3xl font-black text-slate-900">{meal.name}</h1>
 
-            <p className="text-2xl font-black text-orange-400">
+            <p className="text-2xl font-black text-orange-600">
               ₦{Number(meal.price).toLocaleString()}
             </p>
 
-            <p className="text-slate-300 text-sm leading-relaxed">
+            <p className="text-slate-600 text-sm leading-relaxed">
               {meal.description}
             </p>
 
           </div>
 
           {/* Quantity Selector & Add to Cart */}
-          <div className="pt-6 border-t border-slate-800 space-y-6">
+          <div className="pt-6 border-t border-slate-100 space-y-6">
             
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-slate-300">Quantity</span>
-              <div className="flex items-center bg-slate-950 rounded-xl border border-slate-800 p-1">
+              <span className="text-sm font-bold text-slate-800">Quantity</span>
+              <div className="flex items-center bg-slate-50 rounded-xl border border-slate-200 p-1">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-bold text-base flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-base flex items-center justify-center transition-colors border border-slate-200"
                 >
                   -
                 </button>
-                <span className="w-12 text-center text-sm font-bold text-white">
+                <span className="w-12 text-center text-sm font-bold text-slate-900">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-bold text-base flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-base flex items-center justify-center transition-colors border border-slate-200"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-400">
+            <div className="flex items-center justify-between text-xs text-slate-500">
               <span>Item Subtotal:</span>
-              <span className="text-base font-extrabold text-white">
+              <span className="text-base font-extrabold text-slate-900">
                 ₦{(meal.price * quantity).toLocaleString()}
               </span>
             </div>
@@ -139,8 +139,8 @@ const MealDetails = () => {
               disabled={!meal.isAvailable}
               className={`w-full py-4 rounded-2xl font-bold text-base transition-all flex items-center justify-center gap-2 shadow-xl ${
                 meal.isAvailable
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-orange-500/20 active:scale-95'
-                  : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-orange-500/10 active:scale-95'
+                  : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
               }`}
             >
               <span>🛒</span> Add {quantity} {quantity === 1 ? 'Item' : 'Items'} to Cart

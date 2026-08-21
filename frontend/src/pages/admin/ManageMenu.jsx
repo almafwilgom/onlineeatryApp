@@ -106,12 +106,12 @@ const ManageMenu = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-slate-100">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white">Manage Menu</h1>
-          <p className="text-slate-400 text-sm mt-1">Create, edit, or remove restaurant menu items</p>
+          <h1 className="text-3xl font-black text-slate-900">Manage Menu</h1>
+          <p className="text-slate-500 text-sm mt-1">Create, edit, or remove restaurant menu items</p>
         </div>
 
         <button
@@ -124,21 +124,21 @@ const ManageMenu = () => {
 
       <ErrorMessage message={error} />
       {success && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-semibold">
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-250 text-emerald-650 text-sm font-semibold">
           ✅ {success}
         </div>
       )}
 
       {/* Menu Items Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
         {items.length === 0 ? (
           <div className="text-center py-12 text-slate-400 text-sm">
             No menu items available. Click "Create New Meal Item" to add your first dish!
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase tracking-wider text-[10px]">
+            <table className="w-full text-left text-xs text-slate-600">
+              <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="p-4 rounded-l-xl">Meal</th>
                   <th className="p-4">Category</th>
@@ -147,11 +147,11 @@ const ManageMenu = () => {
                   <th className="p-4 rounded-r-xl text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {items.map((item) => (
-                  <tr key={item._id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="p-4 font-bold text-white flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-slate-800 overflow-hidden flex-shrink-0">
+                  <tr key={item._id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="p-4 font-bold text-slate-800 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
                         {item.imageUrl ? (
                           <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
                         ) : (
@@ -159,26 +159,26 @@ const ManageMenu = () => {
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-white">{item.name}</p>
+                        <p className="text-sm font-bold text-slate-900">{item.name}</p>
                         <p className="text-[11px] text-slate-400 line-clamp-1 max-w-xs">{item.description}</p>
                       </div>
                     </td>
 
                     <td className="p-4">
-                      <span className="bg-slate-950 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-full text-[10px] font-bold">
+                      <span className="bg-orange-50 text-orange-655 border border-orange-200 px-2.5 py-1 rounded-full text-[10px] font-bold">
                         {item.category}
                       </span>
                     </td>
 
-                    <td className="p-4 font-extrabold text-white">
+                    <td className="p-4 font-extrabold text-slate-900">
                       ₦{Number(item.price).toLocaleString()}
                     </td>
 
                     <td className="p-4">
                       <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                         item.isAvailable
-                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                          : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                          ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                          : 'bg-rose-50 text-rose-600 border border-rose-200'
                       }`}>
                         {item.isAvailable ? 'Available' : 'Sold Out'}
                       </span>
@@ -187,13 +187,13 @@ const ManageMenu = () => {
                     <td className="p-4 text-right space-x-2">
                       <button
                         onClick={() => openEditModal(item)}
-                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold transition-all text-xs"
+                        className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-bold transition-all text-xs"
                       >
                         ✏️ Edit
                       </button>
                       <button
                         onClick={() => handleDelete(item._id, item.name)}
-                        className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 font-bold transition-all text-xs"
+                        className="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 font-bold transition-all text-xs"
                       >
                         🗑️ Delete
                       </button>
@@ -208,46 +208,46 @@ const ManageMenu = () => {
 
       {/* Modal Form for Create / Edit */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-6 animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-xl space-y-6 animate-in zoom-in-95 duration-150 text-slate-700">
             
-            <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-              <h2 className="text-xl font-bold text-white">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+              <h2 className="text-xl font-bold text-slate-900">
                 {editingItem ? 'Edit Menu Item' : 'Create New Menu Item'}
               </h2>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-700">
                 ✕
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-slate-300 mb-1">Item Name *</label>
+                <label className="block font-bold text-slate-600 mb-1">Item Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Suya Grill Platter"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-orange-500"
+                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-orange-500"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-300 mb-1">Description *</label>
+                <label className="block font-bold text-slate-600 mb-1">Description *</label>
                 <textarea
                   rows={3}
                   required
                   placeholder="Describe ingredients and flavor profile..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-orange-500"
+                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-orange-500"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-300 mb-1">Price (₦) *</label>
+                  <label className="block font-bold text-slate-600 mb-1">Price (₦) *</label>
                   <input
                     type="number"
                     step="0.01"
@@ -256,31 +256,31 @@ const ManageMenu = () => {
                     placeholder="e.g. 2500"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-orange-500"
+                    className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-orange-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-300 mb-1">Category *</label>
+                  <label className="block font-bold text-slate-600 mb-1">Category *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Rice, Soup, Drinks, Desserts"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-orange-500"
+                    className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-orange-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-300 mb-1">Image URL (Optional)</label>
+                <label className="block font-bold text-slate-600 mb-1">Image URL (Optional)</label>
                 <input
                   type="url"
                   placeholder="https://images.unsplash.com/..."
                   value={formData.imageUrl}
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-orange-500"
+                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-orange-500"
                 />
               </div>
 
@@ -292,16 +292,16 @@ const ManageMenu = () => {
                   onChange={(e) => setFormData({ ...formData, isAvailable: e.target.checked })}
                   className="w-4 h-4 accent-orange-500 rounded"
                 />
-                <label htmlFor="isAvailable" className="font-bold text-white cursor-pointer">
+                <label htmlFor="isAvailable" className="font-bold text-slate-800 cursor-pointer">
                   Available for Customer Ordering
                 </label>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-slate-800">
+              <div className="flex gap-3 pt-4 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold"
+                  className="w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold"
                 >
                   Cancel
                 </button>

@@ -36,19 +36,19 @@ const Dashboard = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-slate-100">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white">Admin Dashboard</h1>
-          <p className="text-slate-400 text-sm mt-1">Overview of restaurant performance, sales, and pending orders</p>
+          <h1 className="text-3xl font-black text-slate-900">Admin Dashboard</h1>
+          <p className="text-slate-500 text-sm mt-1">Overview of restaurant performance, sales, and pending orders</p>
         </div>
 
         <div className="flex gap-3">
           <Link
             to="/admin/menu"
-            className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-1.5"
+            className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50 transition-all flex items-center gap-1.5 shadow-sm"
           >
             <span>➕</span> Add Menu Item
           </Link>
@@ -67,56 +67,56 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         
         {/* Total Orders Card */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm relative overflow-hidden">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Orders</p>
-              <h3 className="text-3xl font-black text-white mt-2">{metrics.totalOrders}</h3>
+              <h3 className="text-3xl font-black text-slate-900 mt-2">{metrics.totalOrders}</h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-400 font-bold flex items-center justify-center text-2xl border border-orange-500/20">
+            <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 font-bold flex items-center justify-center text-2xl border border-orange-100">
               📦
             </div>
           </div>
-          <p className="text-[11px] text-slate-500 mt-4">Lifetime placed customer orders</p>
+          <p className="text-[11px] text-slate-400 mt-4">Lifetime placed customer orders</p>
         </div>
 
         {/* Total Revenue Card */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm relative overflow-hidden">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Revenue</p>
-              <h3 className="text-3xl font-black text-amber-400 mt-2">
+              <h3 className="text-3xl font-black text-slate-900 mt-2">
                 ₦{Number(metrics.totalRevenue || 0).toLocaleString()}
               </h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 font-bold flex items-center justify-center text-2xl border border-amber-500/20">
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold flex items-center justify-center text-2xl border border-amber-100">
               💰
             </div>
           </div>
-          <p className="text-[11px] text-slate-500 mt-4">Calculated from non-cancelled orders</p>
+          <p className="text-[11px] text-slate-400 mt-4">Calculated from non-cancelled orders</p>
         </div>
 
         {/* Pending Orders Card */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm relative overflow-hidden">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Pending Orders</p>
-              <h3 className="text-3xl font-black text-emerald-400 mt-2">{metrics.pendingOrders}</h3>
+              <h3 className="text-3xl font-black text-slate-900 mt-2">{metrics.pendingOrders}</h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 font-bold flex items-center justify-center text-2xl border border-emerald-500/20">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold flex items-center justify-center text-2xl border border-emerald-100">
               ⏳
             </div>
           </div>
-          <p className="text-[11px] text-slate-500 mt-4">Orders awaiting kitchen preparation</p>
+          <p className="text-[11px] text-slate-400 mt-4">Orders awaiting kitchen preparation</p>
         </div>
 
       </div>
 
       {/* Recent Orders Preview Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6 text-slate-700">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold text-white">Recent Orders</h2>
-          <Link to="/admin/orders" className="text-xs font-bold text-orange-400 hover:underline">
+          <h2 className="text-xl font-bold text-slate-900">Recent Orders</h2>
+          <Link to="/admin/orders" className="text-xs font-bold text-orange-600 hover:underline">
             View All Orders ➔
           </Link>
         </div>
@@ -125,8 +125,8 @@ const Dashboard = () => {
           <div className="text-center py-8 text-slate-400 text-sm">No orders placed yet.</div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase tracking-wider text-[10px]">
+            <table className="w-full text-left text-xs text-slate-600">
+              <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="p-3.5 rounded-l-xl">Order ID</th>
                   <th className="p-3.5">Customer</th>
@@ -135,20 +135,20 @@ const Dashboard = () => {
                   <th className="p-3.5 rounded-r-xl">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {recentOrders.map((order) => (
-                  <tr key={order._id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="p-3.5 font-mono text-slate-400">
+                  <tr key={order._id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="p-3.5 font-mono text-slate-500">
                       #{order._id.substring(order._id.length - 8)}
                     </td>
-                    <td className="p-3.5 font-bold text-white">
+                    <td className="p-3.5 font-bold text-slate-800">
                       {order.user?.name || 'Customer'}
                     </td>
-                    <td className="p-3.5 font-bold text-orange-400">
+                    <td className="p-3.5 font-bold text-orange-600">
                       ₦{Number(order.totalAmount).toLocaleString()}
                     </td>
                     <td className="p-3.5">
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-orange-50 text-orange-600 border border-orange-100">
                         {order.status}
                       </span>
                     </td>

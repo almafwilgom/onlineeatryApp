@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 border-t border-slate-900 text-slate-400 pt-16 pb-12 transition-all">
+    <footer className="bg-slate-900 border-t border-slate-800 text-slate-400 pt-16 pb-12 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
           
           {/* Brand Col */}
           <div className="space-y-4 md:col-span-1">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-xl shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-xl shadow-md">
                 🍽️
               </div>
               <span className="font-extrabold text-xl tracking-tight text-white">
@@ -21,7 +21,7 @@ const Footer = () => {
             </p>
             <div className="flex items-center gap-3 pt-2">
               {['facebook', 'twitter', 'instagram'].map((social) => (
-                <span key={social} className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-sm hover:text-orange-400 hover:border-orange-500/30 transition-all cursor-pointer">
+                <span key={social} className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-sm text-slate-400 hover:text-orange-400 hover:border-orange-500/30 transition-all cursor-pointer">
                   {social === 'facebook' ? '👍' : social === 'twitter' ? '🐦' : '📷'}
                 </span>
               ))}
@@ -30,7 +30,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-base tracking-wide uppercase">Quick Links</h4>
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/" className="hover:text-orange-400 transition-colors">Home Page</Link></li>
               <li><Link to="/menu" className="hover:text-orange-400 transition-colors">Explore Menu</Link></li>
@@ -41,7 +41,7 @@ const Footer = () => {
 
           {/* Opening Hours */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-base tracking-wide uppercase">Opening Hours</h4>
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Opening Hours</h4>
             <ul className="space-y-2 text-sm text-slate-400">
               <li className="flex justify-between"><span>Mon – Fri:</span> <span className="font-semibold text-slate-200">8:00 AM – 10:00 PM</span></li>
               <li className="flex justify-between"><span>Saturday:</span> <span className="font-semibold text-slate-200">9:00 AM – 11:00 PM</span></li>
@@ -51,7 +51,7 @@ const Footer = () => {
 
           {/* Contact Details */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-base tracking-wide uppercase">Contact Us</h4>
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Contact Us</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <span className="text-orange-400">📍</span>

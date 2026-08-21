@@ -32,45 +32,45 @@ const MyOrders = () => {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'Pending':
-        return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+        return 'bg-amber-50 text-amber-700 border-amber-250';
       case 'Preparing':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        return 'bg-blue-50 text-blue-700 border-blue-250';
       case 'Out for Delivery':
-        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+        return 'bg-purple-50 text-purple-700 border-purple-250';
       case 'Delivered':
-        return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-250';
       case 'Cancelled':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
+        return 'bg-rose-50 text-rose-700 border-rose-250';
       default:
-        return 'bg-slate-800 text-slate-400 border-slate-700';
+        return 'bg-slate-100 text-slate-600 border-slate-200';
     }
   };
 
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8 bg-slate-100">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black text-white">My Orders</h1>
-          <p className="text-slate-400 text-sm mt-1">Track status and view your order history</p>
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900">My Orders</h1>
+          <p className="text-slate-500 text-sm mt-1">Track status and view your order history</p>
         </div>
 
         <button
           onClick={fetchOrders}
-          className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold rounded-xl transition-all flex items-center gap-2"
+          className="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-2 shadow-sm"
         >
           <span>↻</span> Refresh Orders
         </button>
       </div>
 
       {newOrderCreated && (
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-bold flex items-center gap-3 shadow-lg animate-in fade-in slide-in-from-top-2">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-bold flex items-center gap-3 shadow-sm animate-in fade-in slide-in-from-top-2">
           <span className="text-xl">🎉</span>
           <div>
             <p>Order Placed Successfully!</p>
-            <p className="text-xs font-normal text-slate-300">Your order is now being processed by our kitchen.</p>
+            <p className="text-xs font-normal text-slate-600">Your order is now being processed by our kitchen.</p>
           </div>
         </div>
       )}
@@ -78,10 +78,10 @@ const MyOrders = () => {
       <ErrorMessage message={error} />
 
       {orders.length === 0 ? (
-        <div className="text-center py-20 bg-slate-900/60 rounded-3xl border border-slate-800 space-y-4">
+        <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 space-y-4 shadow-sm">
           <div className="text-5xl">📦</div>
-          <h3 className="text-xl font-bold text-white">No Orders Yet</h3>
-          <p className="text-slate-400 text-sm max-w-sm mx-auto">
+          <h3 className="text-xl font-bold text-slate-900">No Orders Yet</h3>
+          <p className="text-slate-500 text-sm max-w-sm mx-auto">
             You haven't placed any food orders yet. Explore our delicious menu to get started!
           </p>
           <Link
@@ -96,21 +96,21 @@ const MyOrders = () => {
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl hover:border-slate-700 transition-all"
+              className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm hover:shadow-md transition-all"
             >
               
               {/* Top row */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
                 <div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-slate-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+                    <span className="text-xs font-mono text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200">
                       ID: #{order._id.substring(order._id.length - 8)}
                     </span>
                     <span className="text-xs text-slate-400">
                       {new Date(order.createdAt).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-2">
+                  <p className="text-xs text-slate-600 mt-3">
                     📍 <strong>Delivery Address:</strong> {order.deliveryAddress}
                   </p>
                 </div>
@@ -129,17 +129,17 @@ const MyOrders = () => {
                   {order.items?.map((item, idx) => (
                     <div
                       key={idx}
-                      className="bg-slate-950/60 rounded-xl p-3 border border-slate-800/80 flex items-center justify-between text-xs"
+                      className="bg-slate-50 rounded-xl p-3 border border-slate-200/60 flex items-center justify-between text-xs text-slate-700"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="w-6 h-6 rounded-md bg-orange-500/10 text-orange-400 font-bold flex items-center justify-center">
+                        <span className="w-6 h-6 rounded-md bg-orange-500/10 text-orange-600 font-bold flex items-center justify-center">
                           {item.quantity}x
                         </span>
-                        <span className="font-semibold text-white truncate max-w-[140px]">
+                        <span className="font-semibold text-slate-900 truncate max-w-[140px]">
                           {item.menuItem?.name || 'Meal Item'}
                         </span>
                       </div>
-                      <span className="font-bold text-slate-300">
+                      <span className="font-bold text-slate-800">
                         ₦{(item.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
@@ -148,9 +148,9 @@ const MyOrders = () => {
               </div>
 
               {/* Order Footer */}
-              <div className="pt-4 border-t border-slate-800 flex justify-between items-center text-sm">
-                <span className="text-slate-400">Total Order Amount</span>
-                <span className="text-xl font-black text-orange-400">
+              <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-sm">
+                <span className="text-slate-500 font-medium">Total Order Amount</span>
+                <span className="text-xl font-black text-orange-600">
                   ₦{Number(order.totalAmount).toLocaleString()}
                 </span>
               </div>

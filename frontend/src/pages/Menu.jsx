@@ -17,7 +17,7 @@ const Menu = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const categories = ['All', 'Rice', 'Soup', 'Drinks', 'Desserts'];
+  const categories = ['All', 'Rice', 'Soup', 'Drinks', 'Desserts', 'Grills'];
 
   const fetchMeals = async () => {
     try {
@@ -58,20 +58,20 @@ const Menu = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8 bg-slate-100">
       
       {/* Header */}
       <div className="text-center space-y-3">
-        <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
           Our Delicious <span className="text-orange-500">Menu</span>
         </h1>
-        <p className="text-slate-400 text-sm max-w-xl mx-auto">
+        <p className="text-slate-500 text-sm max-w-xl mx-auto">
           Explore our wide selection of freshly prepared Nigerian meals, soups, drinks, and desserts.
         </p>
       </div>
 
       {/* Filter Controls Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-6">
+      <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm space-y-6">
         
         {/* Top row: Search form */}
         <form onSubmit={handleSearchSubmit} className="flex gap-3 max-w-2xl mx-auto">
@@ -84,7 +84,7 @@ const Menu = () => {
               placeholder="Search meals by name (e.g. Jollof, Egusi)..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-white text-sm focus:outline-none focus:border-orange-500 transition-colors"
+              className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-250 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-orange-500 transition-colors"
             />
           </div>
           <button
@@ -101,10 +101,10 @@ const Menu = () => {
             <button
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`px-5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                 category === cat
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/20 scale-105'
-                  : 'bg-slate-950 text-slate-300 hover:bg-slate-800 border border-slate-800'
+                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/10 scale-105'
+                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               {cat === 'All' ? '🍽️ All Items' : cat}
@@ -113,27 +113,27 @@ const Menu = () => {
         </div>
 
         {/* Price Range Filter Row */}
-        <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
+        <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-bold text-slate-400">Price Filter (₦):</span>
+            <span className="font-bold text-slate-500">Price Filter (₦):</span>
             <input
               type="number"
               placeholder="Min"
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
-              className="w-24 px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-orange-500"
+              className="w-24 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-orange-500"
             />
-            <span className="text-slate-500">—</span>
+            <span className="text-slate-400">—</span>
             <input
               type="number"
               placeholder="Max"
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
-              className="w-24 px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-orange-500"
+              className="w-24 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-orange-500"
             />
             <button
               onClick={fetchMeals}
-              className="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl transition-all"
+              className="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all"
             >
               Apply Price
             </button>
@@ -141,7 +141,7 @@ const Menu = () => {
 
           <button
             onClick={handleResetFilters}
-            className="text-orange-400 hover:text-orange-300 font-semibold transition-colors"
+            className="text-orange-600 hover:text-orange-700 font-bold transition-colors"
           >
             Reset All Filters ↺
           </button>
@@ -155,10 +155,10 @@ const Menu = () => {
       ) : error ? (
         <ErrorMessage message={error} />
       ) : meals.length === 0 ? (
-        <div className="text-center py-20 bg-slate-900/60 rounded-3xl border border-slate-800 space-y-4">
+        <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 space-y-4 shadow-sm">
           <div className="text-5xl">🔍</div>
-          <h3 className="text-xl font-bold text-white">No meals found</h3>
-          <p className="text-slate-400 text-sm max-w-sm mx-auto">
+          <h3 className="text-xl font-bold text-slate-800">No meals found</h3>
+          <p className="text-slate-500 text-sm max-w-sm mx-auto">
             We couldn't find any dishes matching your search filters. Try clearing your search or category.
           </p>
           <button
