@@ -18,10 +18,10 @@ const MealCard = ({ meal }) => {
   const defaultImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80';
 
   return (
-    <div className="group bg-white rounded-3xl border border-stone-200/80 overflow-hidden shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-200 flex flex-col justify-between">
+    <div className="group bg-white rounded-3xl border border-stone-200/80 overflow-hidden shadow-xs hover:shadow-md hover:border-orange-200 transition-all duration-200 flex flex-col justify-between p-2.5">
       
-      {/* Image container */}
-      <Link to={`/menu/${meal._id}`} className="block relative aspect-4/3 bg-stone-100 overflow-hidden">
+      {/* Dish Image Container */}
+      <Link to={`/menu/${meal._id}`} className="block relative aspect-square bg-stone-900 rounded-2xl overflow-hidden">
         <img
           src={meal.imageUrl || defaultImage}
           alt={meal.name}
@@ -32,53 +32,41 @@ const MealCard = ({ meal }) => {
           }}
         />
 
-        {/* Category tag */}
-        <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-stone-800 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">
-          {meal.category}
-        </span>
-
-        {/* Rating tag (matching reference image) */}
-        <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm text-[11px] font-bold text-stone-800">
+        {/* Rating Pill Tag (Matching reference image ★ 4.8) */}
+        <div className="absolute bottom-2 left-2 bg-white/95 backdrop-blur-md px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs text-[10px] font-extrabold text-stone-900">
           <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
           <span>4.8</span>
         </div>
       </Link>
 
       {/* Content details */}
-      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+      <div className="pt-3 px-1 space-y-1 flex-1 flex flex-col justify-between">
         <div>
           <Link to={`/menu/${meal._id}`} className="block">
-            <h3 className="font-display font-bold text-sm text-stone-900 group-hover:text-orange-600 transition-colors line-clamp-1">
+            <h3 className="font-display font-bold text-xs sm:text-sm text-stone-900 group-hover:text-orange-600 transition-colors line-clamp-1">
               {meal.name}
             </h3>
           </Link>
-          <p className="text-stone-500 text-xs mt-1 line-clamp-2 leading-relaxed">
-            {meal.description || 'Deliciously prepared authentic meal made with fresh ingredients.'}
+          <p className="font-display font-black text-stone-950 text-xs sm:text-sm mt-0.5">
+            ₦{Number(meal.price).toLocaleString()}
           </p>
         </div>
 
-        {/* Price & Add button footer */}
-        <div className="flex items-center justify-between pt-2 border-t border-stone-100">
-          <div>
-            <span className="text-[10px] text-stone-400 font-bold block uppercase tracking-wider">Price</span>
-            <span className="font-display font-black text-stone-950 text-base">
-              ₦{Number(meal.price).toLocaleString()}
-            </span>
-          </div>
-
+        {/* Quick Add Button */}
+        <div className="pt-2 flex justify-end">
           <button
             onClick={handleAddToCart}
             disabled={!meal.isAvailable}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+            className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
               !meal.isAvailable
                 ? 'bg-stone-100 text-stone-300 cursor-not-allowed'
                 : added
-                ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30'
-                : 'bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-500/20 active:scale-90'
+                ? 'bg-emerald-500 text-white shadow-xs'
+                : 'bg-orange-500 hover:bg-orange-600 text-white shadow-xs active:scale-90'
             }`}
             title={meal.isAvailable ? 'Add to Cart' : 'Sold Out'}
           >
-            {added ? <Check className="w-4 h-4 stroke-[3]" /> : <Plus className="w-4 h-4 stroke-[3]" />}
+            {added ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : <Plus className="w-3.5 h-3.5 stroke-[3]" />}
           </button>
         </div>
       </div>

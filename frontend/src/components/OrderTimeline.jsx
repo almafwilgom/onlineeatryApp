@@ -18,7 +18,7 @@ const OrderTimeline = ({ currentStatus, createdAt }) => {
 
   if (currentStatus === 'Cancelled') {
     return (
-      <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold flex items-center gap-2">
+      <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold flex items-center gap-2">
         <span>❌ Order Cancelled</span>
       </div>
     );
@@ -32,41 +32,41 @@ const OrderTimeline = ({ currentStatus, createdAt }) => {
         const isPending = idx > currentIndex;
 
         return (
-          <div key={step} className="flex items-start gap-4 relative">
+          <div key={step} className="flex items-start gap-3.5 relative">
             {/* Connecting line */}
             {idx < steps.length - 1 && (
               <div
-                className={`absolute left-4 top-8 bottom-0 w-0.5 -ml-px ${
+                className={`absolute left-3.5 top-7 bottom-0 w-0.5 -ml-px ${
                   idx < currentIndex ? 'bg-emerald-500' : 'bg-stone-200'
                 }`}
               />
             )}
 
-            {/* Icon status circle */}
+            {/* Icon status circle (Matching reference screen 7) */}
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold z-10 flex-shrink-0 transition-all ${
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold z-10 flex-shrink-0 transition-all ${
                 isPassed
-                  ? 'bg-emerald-500 text-white shadow-sm'
+                  ? 'bg-emerald-500 text-white shadow-xs'
                   : isCurrent
-                  ? 'bg-orange-500 text-white shadow-md shadow-orange-500/30 ring-4 ring-orange-100'
-                  : 'bg-stone-100 border border-stone-300 text-stone-400'
+                  ? 'bg-orange-500 text-white ring-4 ring-orange-100 shadow-xs'
+                  : 'bg-white border-2 border-stone-300 text-stone-300'
               }`}
             >
-              {isPassed ? <Check className="w-4 h-4" /> : idx + 1}
+              {isPassed ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : isCurrent ? '●' : '○'}
             </div>
 
             {/* Label & Details */}
-            <div className="min-w-0 pt-1">
+            <div className="min-w-0 pt-0.5">
               <p
                 className={`text-xs font-bold ${
-                  isCurrent ? 'text-orange-600 font-extrabold text-sm' : isPassed ? 'text-stone-900' : 'text-stone-400'
+                  isCurrent ? 'text-stone-900 font-extrabold' : isPassed ? 'text-stone-800' : 'text-stone-400'
                 }`}
               >
                 {step === 'Pending' ? 'Order Placed' : step}
               </p>
-              {isCurrent && (
-                <p className="text-[11px] text-stone-500 mt-0.5">
-                  {createdAt ? new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'In Progress'}
+              {(isPassed || isCurrent) && (
+                <p className="text-[11px] text-stone-400 mt-0.5">
+                  {createdAt ? new Date(createdAt).toLocaleDateString([], { month: 'short', day: 'numeric' }) + ', ' + new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Aug 19, 10:30 AM'}
                 </p>
               )}
             </div>
