@@ -1,18 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* ── Clean Light-Grey Premium Design Tokens ───────────────────── */
+/* ── Choply Premium Design Tokens & Color Palette ─────────────────── */
 @theme {
-  --color-brand-primary: #f97316;   /* vibrant orange */
-  --color-brand-dark:    #ea580c;   /* deep orange */
-  --color-brand-light:   #ffedd5;   /* soft orange light */
-  --color-grey-bg:        #f1f5f9;   /* primary clean grey background (slate-100) */
-  --color-grey-card:      #ffffff;   /* crisp white cards */
-  --color-grey-border:    #e2e8f0;   /* slate-200 border */
-  --color-grey-hover:     #f8fafc;   /* hover slate-50 */
+  --color-choply-orange:     #F97316;   /* Primary Orange */
+  --color-choply-darkorange: #EA580C;   /* Dark Orange */
+  --color-choply-charcoal:   #1C1917;   /* Charcoal */
+  --color-choply-darkbrown:  #292524;   /* Dark Brown Sidebar */
+  --color-choply-cream:      #FFF7ED;   /* Warm Cream */
+  --color-choply-softbg:     #FAFAF9;   /* Soft Background */
+  --color-choply-card:       #FFFFFF;   /* Pure White */
+  --color-choply-success:    #16A34A;   /* Success Green */
+  --color-choply-warning:    #D97706;   /* Warning Amber */
+  --color-choply-error:      #DC2626;   /* Error Red */
+  --color-choply-info:       #2563EB;   /* Info Blue */
+  --color-choply-muted:      #78716C;   /* Muted Text */
+  --color-choply-border:     #E7E5E4;   /* Border Stone-200 */
+  
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Poppins', 'Inter', system-ui, sans-serif;
 }
 
-/* ── Base Styles ──────────────────────────────────────────────── */
+/* ── Base Reset & Font Styles ────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -26,34 +35,37 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-grey-bg);
-  color: #1e293b; /* slate-800 text */
+  background-color: var(--color-choply-softbg);
+  color: #1C1917;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* ── Touch & Mobile Optimization ────────────────────────────── */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+/* ── Mobile Optimization & Touch Controls ─────────────────────── */
 button, input, select, textarea, a {
   touch-action: manipulation;
 }
 
 /* ── Custom Scrollbar ────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #FAFAF9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1; /* slate-300 */
-  border-radius: 6px;
-  border: 2px solid #f1f5f9;
+  background: #D6D3D1; /* stone-300 */
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; /* slate-400 */
+  background: #A8A29E;
 }
 
 /* ── Utilities for hiding scrollbars on mobile slider tabs ────── */

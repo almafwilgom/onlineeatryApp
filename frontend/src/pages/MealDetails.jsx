@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Star, Heart, Plus, Minus, ShoppingBag, Check } from 'lucide-react';
 import { getMenuItem } from '../services/menuService';
 import { useCart } from '../contexts/CartContext';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -14,15 +15,17 @@ const MealDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [added, setAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchMeal = async () => {
       try {
         setLoading(true);
         const res = await getMenuItem(id);
-        setMeal(res.data?.data?.item);
+        setMeal(res.data?.data?.item || null);
       } catch (err) {
-        setError(err.response?.data?.message || 'Meal details not found.');
+        setError(err.response?.data?.message || 'Failed to load meal details.');
       } finally {
         setLoading(false);
       }
@@ -31,125 +34,140 @@ const MealDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    if (meal && meal.isAvailable) {
-      addItem(meal, quantity);
+    if (!meal) return;
+    for (let i = 0; i < quantity; i++) {
+      addItem(meal);
     }
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
   };
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <div className="max-w-4xl mx-auto p-8"><ErrorMessage message={error} /></div>;
-  if (!meal) return null;
+
+  if (error || !meal) {
+    return (
+      <div className="max-w-md mx-auto py-20 px-4 text-center space-y-4">
+        <ErrorMessage message={error || 'Meal not found.'} />
+        <button
+          onClick={() => navigate('/menu')}
+          className="px-6 py-2.5 bg-orange-500 text-white font-bold rounded-xl text-xs"
+        >
+          Back to Menu
+        </button>
+      </div>
+    );
+  }
+
+  const totalPrice = meal.price * quantity;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-slate-100">
+    <div className="max-w-3xl mx-auto px-4 py-8 space-y-8 pb-24">
       
-      {/* Back button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-800 mb-8 transition-colors"
-      >
-        ← Back to Menu
-      </button>
+      {/* Top Header Controls (Matching reference image) */}
+      <div className="flex justify-between items-center">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2.5 rounded-full bg-white border border-stone-200 text-stone-700 hover:bg-stone-100 transition-colors shadow-sm"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <h1 className="font-display text-base font-bold text-stone-900">Meal Details</h1>
+        <button
+          onClick={() => setIsFavorite(!isFavorite)}
+          className={`p-2.5 rounded-full border transition-all shadow-sm ${
+            isFavorite ? 'bg-rose-50 border-rose-200 text-rose-500' : 'bg-white border-stone-200 text-stone-400 hover:text-rose-500'
+          }`}
+        >
+          <Heart className={`w-5 h-5 ${isFavorite ? 'fill-rose-500' : ''}`} />
+        </button>
+      </div>
 
-      <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-md grid grid-cols-1 md:grid-cols-2 gap-0">
-        
-        {/* Image Side */}
-        <div className="relative bg-slate-100 h-80 md:h-auto min-h-[320px]">
-          {meal.imageUrl ? (
-            <img
-              src={meal.imageUrl}
-              alt={meal.name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80';
-              }}
-            />
+      {/* Large Food Image Card (Matching reference design) */}
+      <div className="relative aspect-4/3 rounded-3xl overflow-hidden bg-stone-100 border border-stone-200 shadow-md">
+        <img
+          src={meal.imageUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'}
+          alt={meal.name}
+          className="w-full h-full object-cover"
+        />
+        {!meal.isAvailable && (
+          <div className="absolute inset-0 bg-stone-950/60 backdrop-blur-xs flex items-center justify-center">
+            <span className="px-4 py-2 bg-rose-600 text-white font-bold text-xs rounded-full uppercase tracking-wider">
+              Sold Out
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Title, Rating & Price */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm space-y-6">
+        <div>
+          <h2 className="font-display text-2xl sm:text-3xl font-black text-stone-900">{meal.name}</h2>
+          
+          <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-1 text-xs font-bold text-stone-800">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <span>4.8</span>
+            </div>
+            <span className="text-xs text-stone-400">(230 reviews)</span>
+          </div>
+        </div>
+
+        <div className="text-3xl font-black text-stone-950 font-display">
+          ₦{Number(meal.price).toLocaleString()}
+        </div>
+
+        <p className="text-stone-600 text-xs sm:text-sm leading-relaxed border-t border-stone-100 pt-4">
+          {meal.description || 'Smoky party jollof rice cooked to perfection and served with grilled chicken.'}
+        </p>
+
+        {/* Quantity Selector */}
+        <div className="space-y-2 border-t border-stone-100 pt-4">
+          <label className="block text-xs font-bold text-stone-500 uppercase tracking-wider">
+            Quantity
+          </label>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center bg-stone-100 rounded-2xl border border-stone-200 p-1">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center text-stone-700 hover:bg-stone-50 font-bold"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+              <span className="w-12 text-center font-display font-extrabold text-sm text-stone-900">
+                {quantity}
+              </span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center text-stone-700 hover:bg-stone-50 font-bold"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Add to Cart Action Button */}
+        <button
+          onClick={handleAddToCart}
+          disabled={!meal.isAvailable}
+          className={`w-full py-4 rounded-2xl font-extrabold text-sm transition-all flex items-center justify-center gap-2 shadow-lg ${
+            !meal.isAvailable
+              ? 'bg-stone-200 text-stone-400 cursor-not-allowed'
+              : added
+              ? 'bg-emerald-500 text-white shadow-emerald-500/20'
+              : 'bg-orange-500 hover:bg-orange-600 text-white shadow-orange-500/30 active:scale-95'
+          }`}
+        >
+          {added ? (
+            <>
+              <Check className="w-5 h-5 stroke-[3]" /> Added to Cart!
+            </>
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-7xl bg-slate-200">
-              🍲
-            </div>
+            <>
+              <ShoppingBag className="w-5 h-5" /> Add to Cart — ₦{totalPrice.toLocaleString()}
+            </>
           )}
-
-          <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-orange-600 text-xs font-bold px-3 py-1 rounded-full border border-orange-500/10 shadow-sm">
-            {meal.category}
-          </span>
-        </div>
-
-        {/* Info Side */}
-        <div className="p-8 sm:p-10 flex flex-col justify-between space-y-6 text-slate-700">
-          <div className="space-y-4">
-            
-            <div className="flex items-center justify-between gap-4">
-              <span className={`text-xs font-bold px-3 py-1 rounded-full ${
-                meal.isAvailable
-                  ? 'bg-emerald-50 text-emerald-600 border border-emerald-250'
-                  : 'bg-rose-5 text-rose-600 border border-rose-250'
-              }`}>
-                {meal.isAvailable ? 'In Stock' : 'Sold Out'}
-              </span>
-              <span className="text-xs text-slate-400">ID: {meal._id?.substring(0, 8)}...</span>
-            </div>
-
-            <h1 className="text-3xl font-black text-slate-900">{meal.name}</h1>
-
-            <p className="text-2xl font-black text-orange-600">
-              ₦{Number(meal.price).toLocaleString()}
-            </p>
-
-            <p className="text-slate-600 text-sm leading-relaxed">
-              {meal.description}
-            </p>
-
-          </div>
-
-          {/* Quantity Selector & Add to Cart */}
-          <div className="pt-6 border-t border-slate-100 space-y-6">
-            
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-slate-800">Quantity</span>
-              <div className="flex items-center bg-slate-50 rounded-xl border border-slate-200 p-1">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-9 h-9 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-base flex items-center justify-center transition-colors border border-slate-200"
-                >
-                  -
-                </button>
-                <span className="w-12 text-center text-sm font-bold text-slate-900">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-9 h-9 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-base flex items-center justify-center transition-colors border border-slate-200"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between text-xs text-slate-500">
-              <span>Item Subtotal:</span>
-              <span className="text-base font-extrabold text-slate-900">
-                ₦{(meal.price * quantity).toLocaleString()}
-              </span>
-            </div>
-
-            <button
-              onClick={handleAddToCart}
-              disabled={!meal.isAvailable}
-              className={`w-full py-4 rounded-2xl font-bold text-base transition-all flex items-center justify-center gap-2 shadow-xl ${
-                meal.isAvailable
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-orange-500/10 active:scale-95'
-                  : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
-              }`}
-            >
-              <span>🛒</span> Add {quantity} {quantity === 1 ? 'Item' : 'Items'} to Cart
-            </button>
-
-          </div>
-
-        </div>
-
+        </button>
       </div>
 
     </div>
