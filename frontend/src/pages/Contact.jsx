@@ -50,7 +50,7 @@ const Contact = () => {
                 <span className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">✉️</span>
                 <div>
                   <p className="font-bold text-slate-900">Email</p>
-                  <p className="text-slate-500">support@onlineeatery.com</p>
+                  <p className="text-slate-500">support@choply.com</p>
                 </div>
               </div>
             </div>

@@ -7,7 +7,7 @@ const About = () => {
       {/* Header */}
       <div className="text-center space-y-4">
         <span className="text-xs font-bold text-orange-600 uppercase tracking-widest">Our Culinary Story</span>
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900">About The Online Eatery</h1>
+        <h1 className="text-4xl sm:text-5xl font-black text-slate-900">About Choply</h1>
         <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
           Bringing authentic, freshly prepared Nigerian and continental meals straight from our kitchen to your table.
         </p>
@@ -18,7 +18,7 @@ const About = () => {
         <div className="space-y-4 text-slate-700">
           <h2 className="text-2xl font-bold text-slate-900">Passion for Good Food</h2>
           <p className="text-slate-600 text-sm leading-relaxed">
-            Founded with a vision to redefine online food ordering in Nigeria, The Online Eatery blends traditional recipes with modern culinary standards.
+            Founded with a vision to redefine online food ordering in Nigeria, Choply blends traditional recipes with modern culinary standards.
           </p>
           <p className="text-slate-500 text-xs leading-relaxed">
             Every dish is prepared on demand using locally sourced, fresh ingredients. From rich Egusi and Efo Riro soups to smoky party Jollof Rice, we ensure every bite delivers an unforgettable flavor.

@@ -8,13 +8,12 @@ const Footer = () => {
           
           {/* Brand Col */}
           <div className="space-y-4 md:col-span-1">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-xl shadow-md">
-                🍽️
-              </div>
-              <span className="font-extrabold text-xl tracking-tight text-white">
-                The Online <span className="text-orange-500">Eatery</span>
-              </span>
+            <Link to="/">
+              <img
+                src="/choply-logo.png"
+                alt="Choply"
+                className="h-14 w-auto object-contain brightness-[1] invert-0"
+              />
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed">
               Order your favorite Nigerian and continental dishes online. Fast delivery, fresh ingredients, and unforgettable taste.
@@ -34,7 +33,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li><Link to="/" className="hover:text-orange-400 transition-colors">Home Page</Link></li>
               <li><Link to="/menu" className="hover:text-orange-400 transition-colors">Explore Menu</Link></li>
-              <li><Link to="/about" className="hover:text-orange-400 transition-colors">About Our Eatery</Link></li>
+              <li><Link to="/about" className="hover:text-orange-400 transition-colors">About Choply</Link></li>
               <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Contact Support</Link></li>
             </ul>
           </div>
@@ -63,7 +62,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <span className="text-orange-400">✉️</span>
-                <span>orders@onlineeatery.com</span>
+                <span>orders@choply.com</span>
               </li>
             </ul>
           </div>
@@ -72,7 +71,7 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} The Online Eatery. PORA Tech Academy Capstone Project.</p>
+          <p>© {new Date().getFullYear()} Choply. Good Food. Delivered Simply.</p>
           <div className="flex gap-6">
             <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-slate-400 cursor-pointer">Terms of Service</span>

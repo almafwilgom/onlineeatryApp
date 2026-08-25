@@ -57,7 +57,7 @@ const Register = () => {
             👤
           </div>
           <h1 className="text-2xl font-black text-slate-900">Create an Account</h1>
-          <p className="text-xs text-slate-505">Join The Online Eatery for fast food delivery</p>
+          <p className="text-xs text-slate-500">Join Choply — Good Food. Delivered Simply.</p>
         </div>
 
         <ErrorMessage message={error} />

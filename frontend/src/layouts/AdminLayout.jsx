@@ -29,16 +29,15 @@ const AdminLayout = () => {
         <div className="space-y-8">
           
           {/* Logo & Admin Badge */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-xl shadow-md">
-              ⚙️
-            </div>
-            <div>
-              <span className="font-extrabold text-lg text-slate-900 block">Eatery Admin</span>
-              <span className="text-[10px] uppercase tracking-wider font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                Management Portal
-              </span>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img
+              src="/choply-logo.png"
+              alt="Choply"
+              className="h-12 w-auto object-contain"
+            />
+            <span className="ml-2 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-50 border border-amber-200 rounded-md">
+              ADMIN
+            </span>
           </Link>
 
           {/* Navigation Links */}
@@ -96,8 +95,10 @@ const AdminLayout = () => {
         {/* Mobile Header */}
         <header className="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-30 shadow-sm">
           <Link to="/admin" className="flex items-center gap-2">
-            <span className="text-xl">⚙️</span>
-            <span className="font-bold text-slate-800 text-base">Admin Panel</span>
+            <img src="/choply-logo.png" alt="Choply" className="h-10 w-auto object-contain" />
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+              ADMIN
+            </span>
           </Link>
           <button
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}

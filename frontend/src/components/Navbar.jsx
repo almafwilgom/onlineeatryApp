@@ -25,16 +25,12 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-2xl shadow-md shadow-orange-500/10 group-hover:scale-105 transition-transform">
-              🍽️
-            </div>
-            <div>
-              <span className="font-extrabold text-xl tracking-tight text-slate-900 block">
-                The Online <span className="text-orange-500">Eatery</span>
-              </span>
-              <span className="text-[10px] text-slate-500 block font-bold uppercase tracking-wider">Fresh & Delicious Food</span>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img
+              src="/choply-logo.png"
+              alt="Choply"
+              className="h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+            />
           </Link>
 
           {/* Desktop Navigation Links */}
