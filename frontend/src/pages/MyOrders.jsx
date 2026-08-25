@@ -115,7 +115,7 @@ const MyOrders = () => {
         <div className="space-y-6">
           {filteredOrders.map((order) => {
             const isExpanded = expandedOrderId === order._id;
-            const shortId = `#CHP${order._id.substring(order._id.length - 5).toUpperCase()}`;
+            const shortId = `#CHP${order._id.substring(order._id.length - 8).toUpperCase()}`;
 
             return (
               <div
