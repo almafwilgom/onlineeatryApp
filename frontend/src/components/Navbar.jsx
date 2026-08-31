@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingBag, User, MapPin, Search, ChevronDown, LogOut, Package, Settings, Shield, Menu, X } from 'lucide-react';
+import { ShoppingBag, User, MapPin, ChevronDown, LogOut, Package, Shield, Menu, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 
@@ -9,7 +9,6 @@ const Navbar = () => {
   const { itemCount, openCart } = useCart();
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,13 +16,6 @@ const Navbar = () => {
     logout();
     setUserDropdownOpen(false);
     navigate('/login');
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/menu?search=${encodeURIComponent(searchQuery.trim())}`);
-    }
   };
 
   const isActive = (path) => {
@@ -34,14 +26,14 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-4">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
           
           {/* Brand Logo */}
           <Link to="/" className="flex items-center group flex-shrink-0">
             <img
               src="/choply-logo.png"
               alt="Choply"
-              className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+              className="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
             />
           </Link>
 
@@ -78,9 +70,9 @@ const Navbar = () => {
           </nav>
 
           {/* Right Controls */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             
-            {/* Delivery Location Pill (Matching reference images) */}
+            {/* Delivery Location Pill */}
             <div className="hidden lg:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 border border-stone-200 text-xs font-semibold text-stone-700 cursor-pointer hover:bg-stone-200/70 transition-colors">
               <MapPin className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
               <span>Deliver to <strong className="text-stone-900 font-extrabold">Surulere, Lagos ▾</strong></span>
@@ -89,18 +81,18 @@ const Navbar = () => {
             {/* Cart Button */}
             <button
               onClick={openCart}
-              className="relative p-2.5 rounded-full bg-stone-100 hover:bg-orange-50 text-stone-700 hover:text-orange-600 transition-all focus:outline-none border border-stone-200"
+              className="relative p-2 sm:p-2.5 rounded-full bg-stone-100 hover:bg-orange-50 text-stone-700 hover:text-orange-600 transition-all focus:outline-none border border-stone-200 cursor-pointer"
               title="View Cart"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 sm:w-5 h-4 sm:h-5" />
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white font-black text-[10px] w-4 sm:w-5 h-4 sm:h-5 rounded-full flex items-center justify-center shadow-md animate-pulse">
                   {itemCount}
                 </span>
               )}
             </button>
 
-            {/* Auth Dropdown or Login Button */}
+            {/* Auth Dropdown or Login Button (Hidden on extra small mobile screens to prevent overflow) */}
             {isAuthenticated ? (
               <div className="relative">
                 <button
@@ -122,9 +114,6 @@ const Navbar = () => {
                     <div className="px-4 py-3 border-b border-stone-100">
                       <p className="text-xs font-bold text-stone-900 truncate">{user?.name}</p>
                       <p className="text-[11px] text-stone-500 truncate">{user?.email}</p>
-                      <span className="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-700">
-                        {user?.role}
-                      </span>
                     </div>
 
                     <Link
@@ -165,20 +154,21 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-5 py-2.5 rounded-full text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 shadow-md shadow-orange-500/20 transition-all"
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 shadow-md shadow-orange-500/20 transition-all whitespace-nowrap"
                 >
                   Login / Sign up
                 </Link>
               </div>
             )}
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle (Always visible on mobile) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-stone-700 hover:bg-stone-100"
+              className="md:hidden p-2 rounded-xl text-stone-700 hover:bg-stone-100 cursor-pointer"
+              aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -187,9 +177,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer Navigation Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-stone-200 px-4 pt-2 pb-6 space-y-2 animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden bg-white border-b border-stone-200 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2 duration-200">
           {[
             { label: 'Home', path: '/' },
             { label: 'Menu', path: '/menu' },
@@ -208,11 +198,11 @@ const Navbar = () => {
             </Link>
           ))}
           {!isAuthenticated && (
-            <div className="pt-2">
+            <div className="pt-3">
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block w-full py-3 text-center rounded-xl bg-orange-500 text-white font-bold text-xs shadow-md"
+                className="block w-full py-3 text-center rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs shadow-md"
               >
                 Login / Sign up
               </Link>

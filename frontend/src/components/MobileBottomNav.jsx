@@ -6,6 +6,12 @@ const MobileBottomNav = () => {
   const location = useLocation();
   const { itemCount } = useCart();
 
+  // Hide bottom nav on login, register, checkout, and admin pages to prevent covering forms/buttons
+  const hiddenRoutes = ['/login', '/register', '/checkout'];
+  if (hiddenRoutes.includes(location.pathname) || location.pathname.startsWith('/admin')) {
+    return null;
+  }
+
   const navItems = [
     { label: 'Home', path: '/', icon: Home },
     { label: 'Search', path: '/menu', icon: Search },
@@ -20,7 +26,7 @@ const MobileBottomNav = () => {
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-stone-200 shadow-lg px-2 py-1.5 flex justify-around items-center">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-stone-200 shadow-lg px-2 py-2 flex justify-around items-center">
       {navItems.map((item) => {
         const Icon = item.icon;
         const active = isActive(item.path);
