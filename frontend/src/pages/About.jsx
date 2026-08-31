@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Leaf, Clock, ShieldCheck, PhoneCall, Users, Heart, Star, Store } from 'lucide-react';
+import { ArrowRight, Leaf, Clock, ShieldCheck, PhoneCall, Users, Heart, Star } from 'lucide-react';
 
 const About = () => {
   return (
     <div className="space-y-16 pb-12">
       
-      {/* ── 1. About Hero Section (Matching Image 3) ────────────────────── */}
+      {/* ── 1. About Hero Section (Matching Image 3 with Branded Nigerian Staff) ──── */}
       <section className="relative bg-gradient-to-b from-[#FFF7ED] via-[#FFF7ED]/40 to-white pt-10 pb-16 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -34,12 +34,16 @@ const About = () => {
               </Link>
             </div>
 
-            {/* Right Hero Image (Choply Staff Chefs matching Image 3) */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-stone-200 aspect-4/3 bg-stone-100">
+            {/* Right Hero Image (Authentic Branded Nigerian Choply Chefs) */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-stone-200 aspect-4/3 bg-stone-900">
               <img
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80"
-                alt="Choply Chefs"
+                src="/choply-chefs-about.png"
+                alt="Choply Nigerian Chefs"
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80';
+                }}
               />
             </div>
 
@@ -92,13 +96,17 @@ const About = () => {
           </div>
         </div>
 
-        {/* ── 3. Our Story Section (Matching Image 3) ─────────────────────── */}
+        {/* ── 3. Our Story Section (Matching Image 3 with Branded Nigerian Team) ── */}
         <section className="bg-white border border-stone-200 rounded-3xl p-8 sm:p-12 shadow-sm grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="relative rounded-2xl overflow-hidden shadow-md aspect-4/3 bg-stone-100 border border-stone-200">
+          <div className="relative rounded-2xl overflow-hidden shadow-md aspect-4/3 bg-stone-900 border border-stone-200">
             <img
-              src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80"
-              alt="Choply Team Story"
+              src="/choply-team-story.png"
+              alt="Choply Nigerian Team Story"
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80';
+              }}
             />
           </div>
 

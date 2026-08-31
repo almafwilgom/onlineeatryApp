@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
+import { GoogleLogo, FacebookLogo } from '../components/BrandLogos';
 import { useAuth } from '../contexts/AuthContext';
 import { login } from '../services/authService';
 import ErrorMessage from '../components/ErrorMessage';
@@ -47,7 +48,7 @@ const Login = () => {
     <div className="min-h-[85vh] flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
         
-        {/* Left Column: Form Section (Matching Image 4) */}
+        {/* Left Column: Form Section (Matching Reference Image 4) */}
         <div className="p-8 sm:p-10 space-y-6 text-left flex flex-col justify-between">
           
           <div className="space-y-6">
@@ -103,7 +104,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 cursor-pointer"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -133,13 +134,22 @@ const Login = () => {
               </span>
             </div>
 
-            {/* Social Buttons (Matching Image 4) */}
+            {/* Social Buttons with Official Google & Facebook Logos */}
             <div className="grid grid-cols-2 gap-3 text-xs font-bold">
-              <button className="py-2.5 px-4 border border-stone-200 rounded-xl flex items-center justify-center gap-2 hover:bg-stone-50 transition-colors cursor-pointer">
-                <span>🌐</span> Google
+              <button
+                type="button"
+                className="py-3 px-4 border border-stone-200 rounded-xl flex items-center justify-center gap-2 hover:bg-stone-50 transition-colors cursor-pointer text-stone-700 font-semibold shadow-xs"
+              >
+                <GoogleLogo className="w-4 h-4" />
+                <span>Google</span>
               </button>
-              <button className="py-2.5 px-4 border border-stone-200 rounded-xl flex items-center justify-center gap-2 hover:bg-stone-50 transition-colors cursor-pointer text-blue-600">
-                <span>f</span> Facebook
+
+              <button
+                type="button"
+                className="py-3 px-4 border border-stone-200 rounded-xl flex items-center justify-center gap-2 hover:bg-stone-50 transition-colors cursor-pointer text-stone-700 font-semibold shadow-xs"
+              >
+                <FacebookLogo className="w-4 h-4" />
+                <span>Facebook</span>
               </button>
             </div>
           </div>
@@ -161,7 +171,7 @@ const Login = () => {
             className="w-full h-full object-cover"
           />
 
-          {/* Security Glass Badge (Matching Image 4) */}
+          {/* Security Glass Badge */}
           <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs space-y-1 text-left">
             <div className="flex items-center gap-2 font-bold text-orange-400">
               <ShieldCheck className="w-4 h-4" />

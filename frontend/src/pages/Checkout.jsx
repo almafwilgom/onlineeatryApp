@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { MapPin, Phone, User, MessageSquare, CreditCard, ShieldCheck, ArrowLeft, ArrowRight, Check, Plus, Minus, Tag, Clock, Headphones, Award } from 'lucide-react';
+import { VisaLogo, MastercardLogo, VerveLogo } from '../components/BrandLogos';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { placeOrder } from '../services/orderService';
@@ -199,7 +200,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Payment Method Section (Matching Image 1) */}
+            {/* Payment Method Section (Matching Image 1 with Official Card Logos) */}
             <div className="space-y-4 pt-2">
               <div>
                 <h3 className="font-display text-sm font-bold text-stone-900">Payment Method</h3>
@@ -227,10 +228,10 @@ const Checkout = () => {
                       <span className="text-[11px] text-stone-500">Visa, Mastercard, Verve</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-black text-stone-800">
-                    <span className="text-blue-700 italic">VISA</span>
-                    <span className="text-red-600">mastercard</span>
-                    <span className="text-emerald-700">Verve</span>
+                  <div className="flex items-center gap-2">
+                    <VisaLogo />
+                    <MastercardLogo />
+                    <VerveLogo />
                   </div>
                 </div>
 
@@ -398,7 +399,7 @@ const Checkout = () => {
               <span>˅</span>
             </div>
 
-            {/* Estimated Delivery Time Box (Matching Image 1) */}
+            {/* Estimated Delivery Time Box */}
             <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex items-center gap-3">
               <span className="text-2xl">🛵</span>
               <div>
@@ -407,7 +408,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Trust Badges 3 Icons */}
+            {/* Trust Badges */}
             <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-bold text-stone-600 pt-2 border-t border-stone-100">
               <div className="space-y-1">
                 <ShieldCheck className="w-4 h-4 mx-auto text-stone-700" />
@@ -425,7 +426,7 @@ const Checkout = () => {
 
           </div>
 
-          {/* Need Help Box (Matching Image 1) */}
+          {/* Need Help Box */}
           <div className="bg-[#FFF7ED] border border-orange-200 rounded-3xl p-5 flex items-center gap-4 shadow-xs">
             <div className="w-12 h-12 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl shadow-md flex-shrink-0">
               👨‍🍳
