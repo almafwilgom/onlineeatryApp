@@ -178,7 +178,7 @@ const ManageMenu = () => {
         >
           <option value="All">All Categories</option>
           <option value="Rice">Rice</option>
-          <option value="Soups">Soups</option>
+          <option value="Soup">Soups</option>
           <option value="Grills">Grills</option>
           <option value="Drinks">Drinks</option>
           <option value="Desserts">Desserts</option>
@@ -333,7 +333,7 @@ const ManageMenu = () => {
                     className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-stone-900 text-xs font-bold focus:outline-none"
                   >
                     <option value="Rice">Rice</option>
-                    <option value="Soups">Soups</option>
+                    <option value="Soup">Soups</option>
                     <option value="Grills">Grills</option>
                     <option value="Drinks">Drinks</option>
                     <option value="Desserts">Desserts</option>

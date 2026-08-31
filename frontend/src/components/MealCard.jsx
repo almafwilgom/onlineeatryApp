@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Plus, Check } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import fallbackMealImage from '../assets/hero.png';
 
 const MealCard = ({ meal }) => {
   const { addItem } = useCart();
@@ -15,7 +16,7 @@ const MealCard = ({ meal }) => {
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const defaultImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80';
+  const defaultImage = fallbackMealImage;
 
   return (
     <div className="group bg-white rounded-3xl border border-stone-200/80 overflow-hidden shadow-xs hover:shadow-md hover:border-orange-200 transition-all duration-200 flex flex-col justify-between p-2.5">

@@ -19,6 +19,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     const fetchLatestProfile = async () => {
@@ -69,8 +70,15 @@ const Profile = () => {
   return (
     <div className="max-w-xl mx-auto px-4 py-6 space-y-6">
       
-      {/* Header */}
-      <h1 className="font-display text-base font-bold text-stone-900 text-center">Profile</h1>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs font-semibold text-orange-600">Your Choply account</p>
+          <h1 className="font-display text-2xl font-black text-stone-900">Profile</h1>
+        </div>
+        <button onClick={() => setEditing((current) => !current)} className="rounded-xl border border-orange-200 bg-orange-50 px-3 py-2 text-xs font-bold text-orange-700 transition hover:bg-orange-100">
+          {editing ? 'Done' : 'Edit details'}
+        </button>
+      </div>
 
       {/* Profile Header Avatar (Matching reference screen 8) */}
       <div className="text-center space-y-2">
@@ -92,13 +100,13 @@ const Profile = () => {
       {/* Profile Menu Options List (Matching reference screen 8) */}
       <div className="bg-white rounded-3xl p-3 border border-stone-200/80 shadow-xs divide-y divide-stone-100 text-xs">
         
-        <div className="p-3.5 flex items-center justify-between hover:bg-stone-50 transition-colors rounded-2xl cursor-pointer">
+        <button onClick={() => setEditing(true)} className="w-full p-3.5 flex items-center justify-between hover:bg-stone-50 transition-colors rounded-2xl cursor-pointer text-left">
           <div className="flex items-center gap-3 text-stone-700">
             <User className="w-4 h-4 text-stone-400" />
             <span className="font-semibold">Personal Information</span>
           </div>
           <ChevronRight className="w-4 h-4 text-stone-300" />
-        </div>
+        </button>
 
         <div className="p-3.5 flex items-center justify-between hover:bg-stone-50 transition-colors rounded-2xl cursor-pointer">
           <div className="flex items-center gap-3 text-stone-700">
@@ -142,11 +150,15 @@ const Profile = () => {
 
       </div>
 
-      {/* Profile Edit Card */}
-      <div className="bg-white rounded-3xl p-6 border border-stone-200/80 shadow-xs space-y-4 text-xs">
-        <h3 className="font-display font-bold text-stone-900 pb-2 border-b border-stone-100">
-          Edit Profile Information
-        </h3>
+      {editing && (
+      <div className="bg-white rounded-3xl p-6 border border-stone-200/80 shadow-xs space-y-4 text-xs animate-rise">
+        <div className="flex items-start justify-between gap-4 border-b border-stone-100 pb-3">
+          <div>
+            <h3 className="font-display font-bold text-stone-900">Your details</h3>
+            <p className="mt-1 text-stone-500">Keep your name and delivery contact up to date.</p>
+          </div>
+          <button onClick={() => setEditing(false)} className="text-xs font-bold text-stone-400 hover:text-stone-700">Close</button>
+        </div>
 
         <ErrorMessage message={error} />
         {success && (
@@ -201,6 +213,7 @@ const Profile = () => {
           </button>
         </form>
       </div>
+      )}
 
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RotateCw, CheckCircle2 } from 'lucide-react';
+import { RotateCw, CheckCircle2, MapPin, UserRound, CalendarDays, Package } from 'lucide-react';
 import { getAllOrders, updateStatus } from '../../services/orderService';
 import { SkeletonTable } from '../../components/Skeleton';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -53,6 +53,10 @@ const ManageOrders = () => {
   const filteredOrders = statusFilter === 'All'
     ? orders
     : orders.filter((o) => o.status === statusFilter);
+
+  const formatOrderDate = (value) => new Date(value).toLocaleString(undefined, {
+    day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit',
+  });
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -129,17 +133,17 @@ const ManageOrders = () => {
                   key={order._id}
                   className="p-5 border border-stone-200/80 rounded-2xl space-y-4 hover:border-stone-300 transition-all bg-stone-50/50"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="font-display font-black text-sm text-stone-900">{shortId}</span>
-                        <span className="text-xs text-stone-400">{new Date(order.createdAt).toLocaleString()}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                    <div className="min-w-0 space-y-2">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <span className="font-display font-black text-base text-stone-900">{shortId}</span>
+                        <span className="inline-flex items-center gap-1 text-xs text-stone-400"><CalendarDays className="h-3.5 w-3.5" />{formatOrderDate(order.createdAt)}</span>
                       </div>
-                      <p className="text-xs text-stone-600 mt-1">
-                        👤 <strong>Customer:</strong> {order.user?.name || 'Unknown'} ({order.user?.email || 'N/A'})
+                      <p className="flex items-center gap-2 text-xs text-stone-700">
+                        <UserRound className="h-3.5 w-3.5 text-orange-500" /> <span className="font-bold">{order.user?.name || 'Customer'}</span><span className="text-stone-400">{order.user?.email || 'No email provided'}</span>
                       </p>
-                      <p className="text-xs text-stone-500">
-                        📍 <strong>Address:</strong> {order.deliveryAddress}
+                      <p className="flex items-start gap-2 text-xs leading-relaxed text-stone-500">
+                        <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-500" />{order.deliveryAddress || 'Delivery address unavailable'}
                       </p>
                     </div>
 
@@ -162,11 +166,13 @@ const ManageOrders = () => {
                   </div>
 
                   {/* Item List */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-stone-200/60">
+                  <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-stone-200/60">
                     {order.items?.map((item, idx) => (
-                      <span key={idx} className="bg-white px-3 py-1 rounded-xl text-xs border border-stone-200 text-stone-700 font-semibold">
-                        {item.quantity}x {item.menuItem?.name || 'Meal'} (₦{(item.price * item.quantity).toLocaleString()})
-                      </span>
+                      <div key={idx} className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl text-xs border border-stone-200 text-stone-700">
+                        <Package className="h-3.5 w-3.5 text-stone-400" />
+                        <span><strong>{item.quantity}×</strong> {item.menuItem?.name || 'Meal'}</span>
+                        <span className="font-bold text-stone-900">₦{((item.price || item.menuItem?.price || 0) * item.quantity).toLocaleString()}</span>
+                      </div>
                     ))}
                     <span className="ml-auto font-display font-black text-stone-950 text-sm">
                       Total: ₦{Number(order.totalAmount).toLocaleString()}
